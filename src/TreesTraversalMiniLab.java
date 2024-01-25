@@ -1,3 +1,4 @@
+
 //Name:
 //Class Period:
 
@@ -18,9 +19,9 @@ public class TreesTraversalMiniLab
 	public static void main (String[] args) 
 	{
 		//Creating the Tree
-		IntTreeNode overallRoot = new IntTreeNode(17);
-		overallRoot.left = new IntTreeNode(41, new IntTreeNode(29), new IntTreeNode(6));
-		overallRoot.right = new IntTreeNode(9, new IntTreeNode(81), new IntTreeNode(40));
+		IntTreeNode2 overallRoot = new IntTreeNode2(17);
+		overallRoot.left = new IntTreeNode2(41, new IntTreeNode2(29), new IntTreeNode2(6));
+		overallRoot.right = new IntTreeNode2(9, new IntTreeNode2(81), new IntTreeNode2(40));
 		
 		//CALL the 3 print methods using the overallRoot
 		//printPreOrder(overallRoot);
@@ -29,10 +30,10 @@ public class TreesTraversalMiniLab
 		
 	}
 	
-	public static void printPreOrder(IntTreeNode root){
+	public static void printPreOrder(IntTreeNode2 root){
 		/* Prints the given tree using the pre-order pattern
 		 */
-		IntTreeNode curr = root;
+		IntTreeNode2 curr = root;
 		System.out.print(root.data + " ");
 		 if (curr.left != null){
 			 	printPreOrder(curr.left);
@@ -42,10 +43,10 @@ public class TreesTraversalMiniLab
 		    }
 	}
 	
-	public static void printInOrder(IntTreeNode root){
+	public static void printInOrder(IntTreeNode2 root){
 		/* Prints the given tree using the in-order pattern
 		 */
-		 IntTreeNode curr = root;
+		 IntTreeNode2 curr = root;
 		 if (curr.left != null){
 			 	printInOrder(curr.left);
 		    }
@@ -55,10 +56,10 @@ public class TreesTraversalMiniLab
 		    }
 	}
 	
-	public static void printPostOrder(IntTreeNode root){
+	public static void printPostOrder(IntTreeNode2 root){
 		/* Prints the given tree using the pre-order pattern
 		 */
-		IntTreeNode curr = root;
+		IntTreeNode2 curr = root;
 		
 		 if (curr.left != null){
 			 	printPostOrder(curr.left);
@@ -71,20 +72,20 @@ public class TreesTraversalMiniLab
 
 }
 
-class IntTreeNode
+class IntTreeNode2
 {
 	public int data;            // data stored at this node
-    public IntTreeNode left;    // reference to left subtree
-    public IntTreeNode right;   // reference to right subtree
+    public IntTreeNode2 left;    // reference to left subtree
+    public IntTreeNode2 right;   // reference to right subtree
         
     // Constructs a leaf node with the given data.
-    public IntTreeNode(int data) {
+    public IntTreeNode2(int data) {
         this(data, null, null);
     }
                 
     // Constructs a branch node with the given data and links.
-    public IntTreeNode(int data, IntTreeNode left,
-                                 IntTreeNode right) {
+    public IntTreeNode2(int data, IntTreeNode2 left,
+                                 IntTreeNode2 right) {
         this.data = data;
         this.left = left;
         this.right = right;

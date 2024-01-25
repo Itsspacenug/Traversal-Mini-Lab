@@ -1,4 +1,5 @@
 // An IntTreeNode object is one node in a binary tree of ints
+ 
 public class IntTreeNode
 {
     public int data;            //data stored at this node
