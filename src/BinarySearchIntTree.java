@@ -23,12 +23,9 @@ public class BinarySearchIntTree {
 	overallRoot and adds the listed Integers to the tree in the specified order.
 	Be sure to import Collection from util. How can you see the value in ANY list?*/
 	public BinarySearchIntTree( Collection<Integer> list) {
-		overallRoot = new IntTreeNode(list.get(0));
 		for(Integer num : list) {
-			IntTreeNode curr = overallRoot;
-			if(curr.left !=null) {
-				
-			}
+			add(num);
+			size++;
 		}
 	}
 	
@@ -40,6 +37,7 @@ public class BinarySearchIntTree {
 	//Empties the tree.
 	public void clear() {
 		overallRoot = null;
+		size 0;
 	}
 	
 	//Returns the smallest value in the tree. Throw an
@@ -53,7 +51,7 @@ public class BinarySearchIntTree {
 				curr = curr.left;
 			}
 		}
-		return curr.left.data;
+		return curr.data;
 	}
 	
 	//Returns the largest value in the tree. Throw an
@@ -67,7 +65,7 @@ public class BinarySearchIntTree {
 				curr = curr.right;
 			}
 		}
-		return curr.right.data;
+		return curr.data;
 	}
 	
 	//Returns the number of leave nodes in the tree. Return -1
@@ -76,12 +74,27 @@ public class BinarySearchIntTree {
 		if(isEmpty()) {
 			return -1;
 		}
-		 return 0;
+		int count = 0;
+		 IntTreeNode curr = overallRoot;
+		while(curr != null) {
+			if(curr.left != null) {
+				count++;
+				curr = curr.left;
+			}
+			if(curr.right != null) {
+				count++;
+				curr = curr.right;
+			}
+		 }
+		 return count;
 	}
 	
 	//Returns true if the list is empty and should return false if
 	//the list is not empty.
 	public boolean isEmpty() {
+		if(size == 0) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -89,7 +102,35 @@ public class BinarySearchIntTree {
 	the tree to maintain ordering; returns true if added successfully or returns
 	false if the item is already in the tree. No duplicates are allowed.*/
 	public boolean add( int value ) {
+		if(overallRoot == null) {
+			overallRoot = new IntTreeNode(value);
+			return true;
+		}
+		IntTreeNode curr = overallRoot;
+		while(curr != null) {
+			if(value > curr.data) {
+				curr = curr.right;
+			}
+			if(value < curr.data) {
+				curr = curr.left;
+			}
+			if(value == curr.data){
+				return false;
+			}else {
+				if(value > curr.data) {
+					curr.right = new IntTreeNode(value);
+					size++;
+					return true;
+				}
+				if(value < curr.data) {
+					curr.left = new IntTreeNode(value);
+					size++;
+					return true;
+				}
+			}
+		 }
 		return false;
+		
 	}
 	
 	//Returns true if the value is in the list,
@@ -118,17 +159,21 @@ public class BinarySearchIntTree {
 	//Returns a String of the tree in-order with each number
 	//separated by a space.
 	public String toString() {
-		return null;
+		return printInOrder(overallRoot);
 		
 	}
-	public int recur(IntTreeNode root) {
-		IntTreeNode2 curr = root;
-		if (curr.left != null){
-			printInOrder(curr.left);
-		}
-		System.out.print(root.data + " ");
-		if (curr.right != null){
-			printInOrder(curr.right);
-		}
+	private static String printInOrder(IntTreeNode root){
+		/* Prints the given tree using the in-order pattern
+		 */
+		String result ="";
+		 IntTreeNode curr = root;
+		 if (curr.left != null){
+			 	printInOrder(curr.left);
+		    }
+		    result += root.data + " ";
+		    if (curr.right != null){
+		    	printInOrder(curr.right);
+		    }
+		    return result;
 	}
 }
