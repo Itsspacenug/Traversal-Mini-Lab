@@ -104,38 +104,40 @@ public class BinarySearchIntTree {
 	public boolean add( int value ) {
 		if(overallRoot == null) {
 			overallRoot = new IntTreeNode(value);
+			size++;
 			return true;
 		}
 		IntTreeNode curr = overallRoot;
+		IntTreeNode parent = null;
 		while(curr != null) {
-			if(value > curr.data) {
+			parent = curr;
+			if(value > parent.data) {
 				curr = curr.right;
-			}
-			if(value < curr.data) {
+			}else if(value < parent.data) {
 				curr = curr.left;
-			}
-			if(value == curr.data){
-				return false;
 			}else {
-				if(value > curr.data) {
-					curr.right = new IntTreeNode(value);
-					size++;
-					return true;
-				}
-				if(value < curr.data) {
-					curr.left = new IntTreeNode(value);
-					size++;
-					return true;
-				}
+				return false;
 			}
 		 }
-		return false;
+		
+		if(value < parent.data) {
+			parent.left = new IntTreeNode(value);
+		}
+		if(value > parent.data) {
+			parent.right = new IntTreeNode(value);
+		}
+		size++;
+		return true;
+		
 		
 	}
 	
 	//Returns true if the value is in the list,
 	//otherwise return false.
 	public boolean contains( int value ) {
+		if(add(value) == false) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -143,7 +145,11 @@ public class BinarySearchIntTree {
 	//node/memory address with the minimum value for the given tree. Return
 	//null if the root is null.
 	private static IntTreeNode minNode( IntTreeNode root ) {
-		return root;	
+		IntTreeNode curr = root;
+		while(curr != null) {
+			curr = curr.left;
+		}
+		return curr;	
 		
 	}
 	
@@ -152,7 +158,50 @@ public class BinarySearchIntTree {
 	node was successfully removed and return false if the number was not in the
 	list. Tips are mentioned in the MISC section of this document.*/
 	public boolean remove( int num ) {
-		return false;
+		if(isEmpty()) {
+			return false;
+		}
+		if(size == 1) {
+			if(num == overallRoot.data) {
+				overallRoot = null;
+			}
+		}
+		IntTreeNode curr = overallRoot;
+		IntTreeNode parent = null;
+		while(curr != null && curr.data != num) {
+			parent = curr;
+			if(num < parent.data) {
+				curr = curr.left;
+			}else if(num > parent.data) {
+				curr = curr.right;
+			}
+		}
+		//if node is a leaf (no children)
+		if(curr.left == null && curr.right == null)
+		{
+			if(num < parent.data) {
+				parent.left = null;
+			}
+			if(num > parent.data) {
+				parent.right = null;
+			}
+		}
+		//if node has only left child or if node has only right child
+		if(curr.left == null || curr.right == null) {
+			IntTreeNode child = (curr.left != null) ? curr.left : curr.right;
+			if(parent.data < child.data) {
+				parent.right = child;
+			}
+			if(parent.data > child.data) {
+				parent.left = child;
+			}
+		}
+		//if node has both children
+		if(curr.left != null && curr.right != null) {
+			IntTreeNode leftChild = curr.left;IntTreeNode rightChild = curr.right;
+			
+		}
+		return true;
 		
 	}
 	
