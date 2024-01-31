@@ -37,7 +37,7 @@ public class BinarySearchIntTree {
 	//Empties the tree.
 	public void clear() {
 		overallRoot = null;
-		size 0;
+		size = 0;
 	}
 	
 	//Returns the smallest value in the tree. Throw an
@@ -199,7 +199,20 @@ public class BinarySearchIntTree {
 		//if node has both children
 		if(curr.left != null && curr.right != null) {
 			IntTreeNode leftChild = curr.left;IntTreeNode rightChild = curr.right;
-			
+			//if(parent.data < leftChild.data) {
+			//	parent.right = child;
+			//}
+			//if(parent.data > leftChild.data) {
+			//	parent.left = child;
+			//}
+			if(curr.left != null) {
+				parent.left = rightChild;
+				rightChild.left = leftChild;
+			}
+			if(curr.right != null) {
+				parent.right = leftChild;
+				leftChild.right = rightChild;
+			}
 		}
 		return true;
 		
@@ -208,21 +221,25 @@ public class BinarySearchIntTree {
 	//Returns a String of the tree in-order with each number
 	//separated by a space.
 	public String toString() {
+		
 		return printInOrder(overallRoot);
 		
 	}
 	private static String printInOrder(IntTreeNode root){
 		/* Prints the given tree using the in-order pattern
 		 */
-		String result ="";
-		 IntTreeNode curr = root;
-		 if (curr.left != null){
-			 	printInOrder(curr.left);
-		    }
-		    result += root.data + " ";
-		    if (curr.right != null){
-		    	printInOrder(curr.right);
-		    }
-		    return result;
+		String result = "";
+		IntTreeNode curr = root;
+		if(curr == null) {
+			return result;
+		}
+		if (curr.left != null){
+			return printInOrder(curr.left);
+		}
+		result = result + " " + root.data + "";
+		if (curr.right != null){
+			return printInOrder(curr.right);
+		}
+		return result;
 	}
 }

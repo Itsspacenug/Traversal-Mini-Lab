@@ -25,8 +25,8 @@ public class TreesTraversalMiniLab
 		
 		//CALL the 3 print methods using the overallRoot
 		//printPreOrder(overallRoot);
-		//printInOrder(overallRoot);
-		printPostOrder(overallRoot);
+		printInOrder(overallRoot);
+		//printPostOrder(overallRoot);
 		
 	}
 	
