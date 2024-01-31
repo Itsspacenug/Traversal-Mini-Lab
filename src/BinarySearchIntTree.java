@@ -189,31 +189,25 @@ public class BinarySearchIntTree {
 		//if node has only left child or if node has only right child
 		if(curr.left == null || curr.right == null) {
 			IntTreeNode child = (curr.left != null) ? curr.left : curr.right;
-			if(parent.data < child.data) {
-				parent.right = child;
-			}
-			if(parent.data > child.data) {
+			if(curr == parent.left) {
 				parent.left = child;
+			}else {
+				parent.right = child;
 			}
 		}
 		//if node has both children
 		if(curr.left != null && curr.right != null) {
 			IntTreeNode leftChild = curr.left;IntTreeNode rightChild = curr.right;
-			//if(parent.data < leftChild.data) {
-			//	parent.right = child;
-			//}
-			//if(parent.data > leftChild.data) {
-			//	parent.left = child;
-			//}
-			if(curr.left != null) {
+			if(parent.left != null) {
 				parent.left = rightChild;
 				rightChild.left = leftChild;
 			}
-			if(curr.right != null) {
+			if(parent.right != null) {
 				parent.right = leftChild;
 				leftChild.right = rightChild;
 			}
 		}
+		size--;
 		return true;
 		
 	}
@@ -221,25 +215,81 @@ public class BinarySearchIntTree {
 	//Returns a String of the tree in-order with each number
 	//separated by a space.
 	public String toString() {
-		
 		return printInOrder(overallRoot);
-		
 	}
 	private static String printInOrder(IntTreeNode root){
 		/* Prints the given tree using the in-order pattern
 		 */
-		String result = "";
+		/*StringBuilder result = new StringBuilder();
 		IntTreeNode curr = root;
-		if(curr == null) {
+		
+		if(curr.left != null && curr.right != null) {
 			return result;
 		}
-		if (curr.left != null){
+		else if (curr.left != null){
 			return printInOrder(curr.left);
 		}
-		result = result + " " + root.data + "";
-		if (curr.right != null){
+		result.append(curr.data + " ");
+		System.out.println(curr.data);
+		else if (curr.right != null){
 			return printInOrder(curr.right);
 		}
-		return result;
+	}*/
+		IntTreeNode current, parent;
+		StringBuilder result = new StringBuilder();
+		 
+        if (root == null)
+            return null;
+ 
+        current = root;
+        while (current != null) 
+        {
+            if (current.left == null) 
+            {
+                result.append(current.data + " ");
+                current = current.right;
+            }
+            else {
+                /* Find the inorder 
+                    predecessor of current
+                 */
+                parent = current.left;
+                while (parent.right != null && parent.right != current)
+                    parent = parent.right;
+ 
+                /* Make current as right 
+                   child of its
+                 * inorder parentdecessor */
+                if (parent.right == null) {
+                    parent.right = current;
+                    current = current.left;
+                }
+ 
+                /* Revert the changes made
+                   in the 'if' part
+                   to restore the original 
+                   tree i.e., fix
+                   the right child of parentdecessor*/
+                else
+                {
+                    parent.right = null;
+                    result.append(current.data + " ");
+                    current = current.right;
+                } /* End of if condition parent->right == NULL
+                   */
+ 
+            } /* End of if condition current->left == NULL*/
+ 
+        }
+        return result.toString();/* End of while */
 	}
+		/*IntTreeNode curr = root;
+		if (curr.left != null){
+			 	printInOrder(curr.left);
+		    }
+		    System.out.print(root.data + " ");
+		    if (curr.right != null){
+		    	printInOrder(curr.right);
+		    }
+		}*/
 }
