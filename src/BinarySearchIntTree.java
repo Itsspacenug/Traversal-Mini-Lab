@@ -74,19 +74,20 @@ public class BinarySearchIntTree {
 		if(isEmpty()) { //if empty returns -1
 			return -1;
 		}
-		int count = 0;
-		 IntTreeNode curr = overallRoot; //temp
-		while(curr != null) { //loop to traverse
-			if(curr.left != null) { //traverse
-				count++; //counter
-				curr = curr.left; //traverses left
-			}
-			if(curr.right != null) { //traverse
-				count++; //counter
-				curr = curr.right; //traverse right 
-			}
-		 }
-		 return count; //returns the counter
+		return countLeavesRecursive(overallRoot);
+	}
+	
+	private int countLeavesRecursive(IntTreeNode node) {
+		if(node == null) { //base case
+			return 0;
+		}
+		if(node.left == null && node.right == null) { //counts every leaf
+			return 1;
+		}
+		
+		int leftLeaves = countLeavesRecursive(node.left); //calls recursion
+		int rightLeaves = countLeavesRecursive(node.right); //call recursion
+		return 0;
 	}
 	
 	//Returns true if the list is empty and should return false if
